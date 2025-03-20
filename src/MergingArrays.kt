@@ -1,0 +1,142 @@
+import java.util.PriorityQueue
+
+/* 1.)
+You are given two integer arrays nums1 and nums2,
+sorted in non-decreasing order, and two integers m and n,
+representing the number of elements in nums1 and nums2 respectively.
+
+Merge nums1 and nums2 into a single array sorted in non-decreasing order.
+
+The final sorted array should not be returned by the function,
+but instead be stored inside the array nums1. To accommodate this,
+nums1 has a length of m + n, where the first m elements denote the
+elements that should be merged, and the last n elements are set to
+0 and should be ignored. nums2 has a length of n.
+*/
+
+
+fun merge(nums1: IntArray, m: Int, nums2: IntArray, n: Int): Unit {
+
+    var p1 = m - 1   // Getting the last index of nums1
+    var p2 = n - 1   // Getting the last index of nums2
+    var p = m + n - 1  // Getting the last index of the both the nums1 and nums2
+
+
+    while (p1 >= 0 && p2 >= 0) {
+        if (nums1[p1] > nums2[p2]) {
+            nums1[p] = nums1[p1]
+            p1--
+        } else {
+            nums1[p] = nums2[p2]
+            p2--
+        }
+        p--
+    }
+    while (p2 >= 0) {
+        nums1[p] = nums2[p2]
+        p2--
+        p--
+    }
+
+}
+
+/* 2.)
+You are given k sorted integer arrays. Write a function to merge
+them into a single sorted array efficiently.
+ */
+fun mergeKSortedArrays(arrays: List<IntArray>): IntArray {
+
+    // Min-Heap that sorts the values first
+    val minHeap = PriorityQueue<HeapNode> { a, b -> a.value - b.value }
+    val result = mutableListOf<Int>()
+
+    // Step 1: Add the element of the first array to the heap.
+    for (i in arrays.indices) {
+        if (arrays[i].isNotEmpty()) {
+            minHeap.add(HeapNode(arrays[i][0], i, 0)) // (value, arrayIndex, elementIndex)
+        }
+    }
+
+    //Step 2:  Extract the smallest element and insert the next element from the same array.
+    while (minHeap.isNotEmpty()) {
+        val node = minHeap.poll() // Extract the smallest element
+        result.add(node.value) // Append to result array
+
+        val nextIndex = node.elementIndex + 1
+        if (nextIndex < arrays[node.arrayIndex].size) {
+            // Insert the next element from the same array into the heap
+            minHeap.add(HeapNode(arrays[node.arrayIndex][nextIndex], node.arrayIndex, nextIndex))
+        }
+    }
+
+    return result.toIntArray()
+}
+
+data class HeapNode(
+    val value: Int,
+    val elementIndex: Int,
+    val arrayIndex: Int
+)
+
+
+/* 3.)
+You are given the heads of two sorted linked lists, list1 and list2.
+Merge the two lists into one sorted linked list and return its head.
+*/
+class ListNode(var `val`: Int) {
+    var next: ListNode? = null
+}
+
+fun mergeTwoLists(list1: ListNode?, list2: ListNode?): ListNode? {
+    val dummy = ListNode(0)
+    var curr = dummy
+
+    var p1 = list1
+    var p2 = list2
+
+    while (p1 != null && p2 != null) {
+        if (p1.`val` < p2.`val`) {
+            curr.next = p1
+            p1 = p1.next
+        } else {
+            curr.next = p2
+            p2 = p2.next
+        }
+        curr = curr.next!!
+    }
+    curr.next = p1 ?: p2
+    return dummy.next
+
+}
+
+/* 4.)
+You are given the heads of two sorted linked lists, list1 and list2.
+Write a function to merge the two lists into one sorted linked list and return its head.
+*/
+
+class Node(var `val`: Int) {
+    var next: Node? = null
+}
+
+fun mergeSortedLinkedLists(nodeList1: Node?, nodeList2: Node?): Node? {
+    val nodeInstance = Node(0)
+    var current = nodeInstance
+
+    var p1 = nodeList1
+    var p2 = nodeList2
+
+    while (p1 != null && p2 != null) {
+        if (p1.`val` < p2.`val`) {
+            current.next = p1
+            p1 = p1.next
+        } else {
+            current.next = p2
+            p2 = p1.next
+        }
+        current = current.next!!
+    }
+    current.next = p1 ?: p2
+    return nodeInstance.next
+}
+
+
