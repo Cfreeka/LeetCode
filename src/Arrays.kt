@@ -139,4 +139,64 @@ fun mergeSortedLinkedLists(nodeList1: Node?, nodeList2: Node?): Node? {
     return nodeInstance.next
 }
 
+/* 5.) Kids With the Greatest Number of Candies
+There are n kids with candies. You are given an integer array candies,
+where each candies[i] represents the number of candies the ith kid has,
+and an integer extraCandies, denoting the number of extra candies that you have.
+
+Return a boolean array result of length n, where result[i] is true if, after
+giving the ith kid all the extraCandies, they will have the greatest number
+of candies among all the kids, or false otherwise.
+
+Note that multiple kids can have the greatest number of candies.
+ */
+
+fun kidsWithCandies(candies: IntArray, extraCandies: Int): List<Boolean> {
+
+    val maxCandies = candies.maxOrNull() ?: 0   // Find the max amount of candies among kids
+    return candies.map { it + extraCandies >= maxCandies } // Check if adding extraCandies makes them the highest
+}
+
+
+/* (6.) Can Place Flowers
+You have a long flowerbed in which some of the plots are planted, and some are not.
+However, flowers cannot be planted in adjacent plots.
+Given an integer array flowerbed containing 0's and 1's, where 0 means empty and 1
+means not empty, and an integer n, return true if n new flowers can be planted in
+the flowerbed without violating the no-adjacent-flowers rule and false otherwise.
+ */
+
+fun canPlaceFlowers(flowerbed: IntArray, n: Int): Boolean {
+
+    var plantable = 0 // Count of flowers that can be planted
+    val size = flowerbed.size
+
+    for (i in flowerbed.indices) {
+        if (flowerbed[i] == 0) { // Only consider empty spots
+            val leftEmpty = (i == 0) || (flowerbed[i - 1] == 0) // Left boundary or empty
+            val rightEmpty = (i == size - 1) || (flowerbed[i + 1] == 0) // Right boundary or empty
+
+            if (leftEmpty && rightEmpty) { // Can plant a flower here
+                flowerbed[i] = 1 // Mark as planted
+                plantable++ // Increment planted count
+
+                if (plantable >= n) return true // Early exit if enough flowers are planted
+            }
+        }
+    }
+
+    return plantable >= n
+}
+
+
+
+
+
+
+
+
+
+
+
+
 

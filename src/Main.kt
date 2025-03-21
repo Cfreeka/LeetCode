@@ -2,7 +2,7 @@ import java.util.PriorityQueue
 
 fun main() {
 
-    val word1 = "ab"
-    val word2 = "abc"
-    println(gcdOfStrings(word1, word2))
+    val anIntArray = intArrayOf(1,0,0,0,1)
+    println(canPlaceFlowers(anIntArray, 1))
+
 }
