@@ -188,6 +188,31 @@ fun canPlaceFlowers(flowerbed: IntArray, n: Int): Boolean {
     return plantable >= n
 }
 
+/* 7.) Product of an array except self.
+Given an integer array nums, return an array answer such that answer[i] is equal to
+the product of all the elements of nums except nums[i].
+The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
+You must write an algorithm that runs in O(n) time and without using the division operation.
+*/
+fun productExceptSelf(nums: IntArray): IntArray {
+
+    val n = nums.size
+    val result = IntArray(n) { 1 }  // Step 1: Initialize result with 1
+
+    var prefix = 1
+    for (i in nums.indices) {
+        result[i] = prefix  // Store prefix product
+        prefix *= nums[i]   // Update prefix
+    }
+
+    var suffix = 1
+    for (i in nums.indices.reversed()) {
+        result[i] *= suffix  // Multiply with suffix product
+        suffix *= nums[i]    // Update suffix
+    }
+
+    return result
+}
 
 
 
