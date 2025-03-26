@@ -214,6 +214,29 @@ fun productExceptSelf(nums: IntArray): IntArray {
     return result
 }
 
+/* 8.) Increasing Triplet Subsequence
+Given an integer array nums, return true if there exists a triple of indices
+(i, j, k) such that i < j < k and nums[i] < nums[j] < nums[k]. If no such
+indices exists, return false.
+*/
+fun increasingTriplet(nums: IntArray): Boolean {
+
+    var first = Int.MAX_VALUE
+    var second = Int.MAX_VALUE
+    for (i in nums.indices) {
+        if (nums[i] <= first) {
+            first = nums[i]
+        }
+        else if(nums[i] <= second){
+            second = nums[i]
+
+        } else {
+            return true
+        }
+    }
+    return false
+}
+
 
 
 
