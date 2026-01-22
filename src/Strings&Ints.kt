@@ -88,7 +88,11 @@ two words. The returned string should only have a single space separating the
 words. Do not include any extra spaces.
 */
 fun reverseWords(s: String): String {
-    return s.trim().split("\\s+".toRegex()).reversed().joinToString(" ")
+    return s.trim()
+        .split("\\s+"
+            .toRegex())
+        .reversed()
+        .joinToString(" ")
 }
 
 /* 5.) String Compression
@@ -127,7 +131,73 @@ fun compress(chars: CharArray): Int {
     }
     return write
 }
+// 6.) Given a String x, return true if x is a palindrome, and false otherwise. 
+fun isPalindrome(word: String): Boolean {
+    return word == word.reversed()
+} 
 
+// 7.) Given an integer x, return true if x is a palindrome, and false otherwise. 
+fun isIntPalindrome(x: Int): Boolean {
+    if(x < 0) return false
+
+    var temp = x
+    var reversed = 0
+
+    while(temp != 0) {
+        val lastDigit = temp % 10
+        reversed = reversed * 10 + lastDigit
+        temp /= 10
+    }
+
+    return x == reversed
+}
+/* 8.) Roman to Integer
+Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
+
+Symbol       Value
+I             1
+V             5
+X             10
+L             50
+C             100
+D             500
+M             1000
+For example, 2 is written as II in Roman numeral, just two ones added together. 12 is
+written as XII, which is simply X + II. The number 27 is written as XXVII, which is XX + V + II.
+
+Roman numerals are usually written largest to smallest from left to right. However,
+the numeral for four is not IIII. Instead, the number four is written as IV. Because the
+one is before the five we subtract it making four. The same principle applies to the
+number nine, which is written as IX. There are six instances where subtraction is used:
+
+I can be placed before V (5) and X (10) to make 4 and 9.
+X can be placed before L (50) and C (100) to make 40 and 90.
+C can be placed before D (500) and M (1000) to make 400 and 900.
+Given a roman numeral, convert it to an integer.
+*/
+fun romanToInt(s: String): Int {
+    val romanValues = mapOf(
+        'I' to 1,
+        'V' to 5,
+        'X' to 10,
+        'L' to 50,
+        'C' to 100,
+        'D' to 500,
+        'M' to 1000
+    )
+    var result = 0
+    for (i in s.indices) {
+        val currentValue = romanValues[s[i]]!!
+
+        if (i < s.length - 1 && currentValue < romanValues[s[i + 1]]!!) {
+            result -= currentValue
+        } else {
+            result += currentValue
+        }
+    }
+
+    return result
+}
 
 
 
