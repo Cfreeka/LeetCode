@@ -258,18 +258,31 @@ class ArraySolutions {
 
     }
 
-    /* 10.)
-    Given two sorted arrays nums1 and nums2 of size m and n respectively, return the
-    median of the two sorted arrays.
+    /* 10.) Longest Common Prefix
+    Write a function to find the longest common prefix string amongst an array of strings.
+    If there is no common prefix, return an empty string "".*/
+    fun longestCommonPrefix(strs: Array<String>): String {
+       if (strs.isEmpty()) return ""
 
-    The overall run time complexity should be O(log (m+n)).
-     */
-//    fun findMedianSortedArrays(nums1: IntArray, nums2: IntArray): Double {
-//
-//
-//    }
+        val firstWord = strs[0]
+        val prefix = StringBuilder()
+
+        for (charIndex in firstWord.indices) {
+            val currentChar = firstWord[charIndex]
+
+            for (wordIndex in 1 until strs.size) {
+                val currentWord = strs[wordIndex]
+                if (charIndex >= currentWord.length || currentWord[charIndex] != currentChar) {
+                    return prefix.toString()
+                }
+            }
+             prefix.append(currentChar)
+        }
+
+        return prefix.toString()
+    }
+
 }
-
 
 
 

@@ -199,19 +199,29 @@ fun romanToInt(s: String): Int {
     return result
 }
 
+ /* 9.) Valid Anagram
+Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+An anagram means:
+Same letters
+Same number of each letter
+Order does not matter */
 
+fun isAnagram(s: String, t: String): Boolean {
+    if (s.length != t.length) return false
 
+    val charCounts = IntArray(26)
 
+    for (char in s) {
+        charCounts[char -'a']++
+    }
 
+    for (char  in t) {
+        charCounts[char - 'a']--
+    }
 
+    for (count in charCounts) {
+        if (count != 0) return false
+    }
 
-
-
-
-
-
-
-
-
-
-
+    return true
+}
